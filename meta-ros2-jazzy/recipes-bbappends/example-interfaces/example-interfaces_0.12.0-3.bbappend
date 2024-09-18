@@ -1,4 +1,5 @@
 # Copyright (c) 2019 LG Electronics, Inc.
+# Copyright (C) 2024 Advanced Micro Devices, Inc.  All rights reserved.
 
 ROS_BUILDTOOL_DEPENDS += " \
     rosidl-parser-native \
@@ -14,10 +15,10 @@ ROS_BUILDTOOL_DEPENDS += " \
 ROS_BUILD_DEPENDS += " \
     rosidl-typesupport-c \
     rosidl-typesupport-cpp \
+    action-msgs \
 "
 
 ROS_EXEC_DEPENDS += " \
-    action-msgs \
     builtin-interfaces \
     fastcdr \
     rosidl-typesupport-fastrtps-c \
