@@ -26,3 +26,6 @@ ROS_EXEC_DEPENDS += " \
     service-msgs \
     unique-identifier-msgs \
 "
+
+# Disable buildpaths QA check warnings.
+INSANE_SKIP:${PN} += "buildpaths"
