@@ -18,7 +18,7 @@
 # Copyright (c) 2019-2021 LG Electronics, Inc.
 
 readonly SCRIPT_NAME="ros-generate-cache"
-readonly SCRIPT_VERSION="1.8.0"
+readonly SCRIPT_VERSION="1.9.0"
 
 # Files under ros/rosdistro/rosdep that we care about. Keep in sync with setting in ros-generate-recipes.sh .
 readonly ROSDEP_YAML_BASENAMES="base python ruby"
@@ -50,7 +50,7 @@ case $ROS_DISTRO in
         ROS_VERSION="1"
         ;;
 
-    "dashing"|"eloquent"|"foxy"|"galactic"|"humble"|"iron"|"jazzy"|"rolling")
+    "dashing"|"eloquent"|"foxy"|"galactic"|"humble"|"iron"|"jazzy"|"kilted"|"rolling")
         ROS_VERSION="2"
         ;;
 
@@ -61,11 +61,11 @@ esac
 
 # Keep this block in sync with the one in ros-generate-recipes.sh .
 case $ROS_DISTRO_RELEASE_DATE in
-    pre-release|[2-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9])
+    final|pre-release|[2-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9])
         : OK
         ;;
 
-    *)  echo "ABORT: ROS_DISTRO_RELEASE_DATE not YYYY-MM-DD or 'pre-release': '$ROS_DISTRO_RELEASE_DATE'"
+    *)  echo "ABORT: ROS_DISTRO_RELEASE_DATE not YYYY-MM-DD or 'final' or 'pre-release': '$ROS_DISTRO_RELEASE_DATE'"
         exit 1
         ;;
 esac
@@ -108,6 +108,37 @@ fi
 tmpdir=$(mktemp -t -d ros-generate-cache-XXXXXXXX)
 trap "rm -rf $tmpdir" 0
 
+function set_release_version {
+    package=$1
+    oldversion=$2
+    newversion=$3
+
+    python3 <<HEREDOC
+from ruamel.yaml import YAML
+
+yaml = YAML()
+yaml.preserve_quotes = True  # keep existing quotes if any
+
+def set_release_version(data, repo_name, oldversion, newversion):
+    print("set_release_version")
+    if repo_name in data.get("repositories", {}):
+        release_section = data["repositories"][repo_name].get("release", {})
+        if "version" in release_section:
+            if release_section["version"] == oldversion:
+                release_section["version"] = newversion
+
+# Load the file
+with open("$ROS_DISTRO/distribution.yaml", "r") as f:
+    data = yaml.load(f)
+
+set_release_version(data, '$1', '$2', '$3')
+
+# Write back the file
+with open("$ROS_DISTRO/distribution.yaml", "w") as f:
+    yaml.dump(data, f)
+HEREDOC
+}
+
 # Create a directory tree under $tmpdir with the contents of ros/rosdistro.git at commit $ROS_ROSDISTRO_COMMIT.
 cd $path_to_ros_rosdistro
 git archive $ROS_ROSDISTRO_COMMIT | tar -C $tmpdir -xf -
@@ -116,13 +147,32 @@ cd - > /dev/null
 # Create $tmpdir/$ROS_DISTRO-cache.yaml.gz .
 cd $tmpdir
 
+# Make changes to distribution.yaml
 if [ "$ROS_DISTRO" = "dashing" -o "$ROS_DISTRO" = "eloquent" ] ; then
     sed 's#boschresearch/fmilibrary_vendor-release#ros2-gbp/fmilibrary_vendor-release#g' -i $ROS_DISTRO/distribution.yaml
     sed 's#boschresearch/fmi_adapter_ros2-release#ros2-gbp/fmi_adapter-release#g' -i $ROS_DISTRO/distribution.yaml
     sed 's#fmi_adapter_ros2#fmi_adapter#g' -i $ROS_DISTRO/distribution.yaml
 fi
 
+if [ "$ROS_DISTRO" = "kilted" ] ; then
+   set_release_version 'py_binding_tools' '2.0.2-1' '2.1.0-1'
+fi
+
 rosdistro_build_cache --debug --preclean --ignore-local $tmpdir/index-v4.yaml $ROS_DISTRO
+if [ $? -ne 0 ]; then
+    echo "ABORT: rosdistro_build_cache returned a runtime error"
+    exit 1
+fi
+
+if [ ! -f $tmpdir/index-v4.yaml ]; then
+    echo "ABORT: $tmpdir/index-v4.yaml could not be found."
+    exit 1
+fi
+
+if [ ! -f $tmpdir/$ROS_DISTRO-cache.yaml.gz ]; then
+    echo "ABORT: $tmpdir/$ROS_DISTRO-cache.yaml.gz could not be found."
+    exit 1
+fi
 
 cd - > /dev/null
 
@@ -157,10 +207,12 @@ if [ "$BRANCH_NAME" != ":nobranch" ] ; then
     fi
 fi
 git add $generated/
-if [ $ROS_DISTRO_RELEASE_DATE = "pre-release" ]; then
+if [ $ROS_DISTRO_RELEASE_DATE = "final" ]; then
+    release="final"
+elif [ $ROS_DISTRO_RELEASE_DATE = "pre-release" ]; then
     release="pre-release"
 else
     release="release $ROS_DISTRO_RELEASE_DATE"
 fi
-git commit -m "{$ROS_DISTRO} Update cache.yaml and rosdep files for $ROS_DISTRO $release as of $ROS_ROSDISTRO_COMMIT_DATETIME"
+git commit -s -m "{$ROS_DISTRO} Update cache.yaml and rosdep files for $ROS_DISTRO $release as of $ROS_ROSDISTRO_COMMIT_DATETIME"
 unset release

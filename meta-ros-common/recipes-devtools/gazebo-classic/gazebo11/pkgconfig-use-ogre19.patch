@@ -1,0 +1,76 @@
+Use pkgconfig to find OGRE19
+
+We need this specific version of OGRE for Gazebo Classic.
+
+Upstream-Status: Inappropriate [oe specific]
+
+Signed-off-by: Rob Woolley <rob.woolley@windriver.com>
+
+Index: git/cmake/SearchForStuff.cmake
+===================================================================
+--- git.orig/cmake/SearchForStuff.cmake
++++ git/cmake/SearchForStuff.cmake
+@@ -366,7 +366,7 @@ if (PKG_CONFIG_FOUND)
+   # Find OGRE
+ 
+   pkg_check_modules(OGRE-RTShaderSystem
+-                    OGRE-RTShaderSystem>=${MIN_OGRE_VERSION})
++                    OGRE19-RTShaderSystem>=${MIN_OGRE_VERSION})
+ 
+   if (OGRE-RTShaderSystem_FOUND)
+     set(ogre_ldflags ${OGRE-RTShaderSystem_LDFLAGS})
+@@ -380,7 +380,7 @@ if (PKG_CONFIG_FOUND)
+     set (INCLUDE_RTSHADER OFF CACHE BOOL "Enable GPU shaders")
+   endif ()
+ 
+-  pkg_check_modules(OGRE OGRE>=${MIN_OGRE_VERSION})
++  pkg_check_modules(OGRE OGRE19>=${MIN_OGRE_VERSION})
+   
+   if (PKG_CONFIG_EXECUTABLE AND OGRE_FOUND AND NOT DEFINED OGRE_VERSION)
+     execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --modversion OGRE
+@@ -451,7 +451,7 @@ if (PKG_CONFIG_FOUND)
+     set(ogre_cflags ${ogre_cflags} ${OGRE_CFLAGS})
+   endif ()
+ 
+-  pkg_check_modules(OGRE-Terrain OGRE-Terrain)
++  pkg_check_modules(OGRE-Terrain OGRE19-Terrain)
+   if (OGRE-Terrain_FOUND)
+     set(ogre_ldflags ${ogre_ldflags} ${OGRE-Terrain_LDFLAGS})
+     set(ogre_include_dirs ${ogre_include_dirs} ${OGRE-Terrain_INCLUDE_DIRS})
+@@ -460,7 +460,7 @@ if (PKG_CONFIG_FOUND)
+     set(ogre_cflags ${ogre_cflags} ${OGRE-Terrain_CFLAGS})
+   endif()
+ 
+-  pkg_check_modules(OGRE-Overlay OGRE-Overlay)
++  pkg_check_modules(OGRE-Overlay OGRE19-Overlay)
+   if (OGRE-Overlay_FOUND)
+     set(ogre_ldflags ${ogre_ldflags} ${OGRE-Overlay_LDFLAGS})
+     set(ogre_include_dirs ${ogre_include_dirs} ${OGRE-Overlay_INCLUDE_DIRS})
+Index: git/cmake/gazebo-config.cmake.in
+===================================================================
+--- git.orig/cmake/gazebo-config.cmake.in
++++ git/cmake/gazebo-config.cmake.in
+@@ -152,12 +152,12 @@ foreach(lib @PKG_LIBRARIES@)
+ endforeach()
+ 
+ # Get the install prefix for OGRE
+-execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --variable=prefix OGRE
++execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --variable=prefix OGRE19
+   OUTPUT_VARIABLE OGRE_INSTALL_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+ 
+ # Add the OGRE cmake path to CMAKE_MODULE_PATH
+ set(CMAKE_MODULE_PATH
+-  "${OGRE_INSTALL_PREFIX}/share/OGRE/cmake/modules;${OGRE_INSTALL_PREFIX}/lib/OGRE/cmake;${OGRE_INSTALL_PREFIX}/CMake;${CMAKE_MODULE_PATH}")
++  "$ENV{PKG_CONFIG_SYSROOT_DIR}${OGRE_INSTALL_PREFIX}/share/OGRE19/cmake/modules;$ENV{PKG_CONFIG_SYSROOT_DIR}${OGRE_INSTALL_PREFIX}/lib/OGRE19/cmake;$ENV{PKG_CONFIG_SYSROOT_DIR}${OGRE_INSTALL_PREFIX}/CMake;${CMAKE_MODULE_PATH}")
+ 
+ # Find boost
+ find_package(Boost @MIN_BOOST_VERSION@ REQUIRED thread system
+@@ -185,7 +185,7 @@ list(APPEND @PKG_NAME@_INCLUDE_DIRS ${SD
+ list(APPEND @PKG_NAME@_LIBRARIES ${SDFormat_LIBRARIES})
+ 
+ # Find OGRE
+-find_package(OGRE REQUIRED COMPONENTS Terrain Paging)
++find_package(OGRE19 REQUIRED COMPONENTS Terrain Paging)
+ list(APPEND @PKG_NAME@_INCLUDE_DIRS ${OGRE_INCLUDE_DIRS})
+ list(APPEND @PKG_NAME@_LIBRARIES ${OGRE_LIBRARIES})
+ # When including OGRE, also include the Terrain and Paging components

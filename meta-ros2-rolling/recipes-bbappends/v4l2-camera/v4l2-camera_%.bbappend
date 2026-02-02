@@ -1,8 +1,5 @@
 # Copyright (C) 2023 Avnet, Inc.  All rights reserved.
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}:"
-SRC_URI += "file://fix_warning.patch"
-
 # | CMake Error in CMakeLists.txt:
 # |   Imported target "rclcpp::rclcpp" includes non-existent path
 # |
@@ -41,7 +38,7 @@ SRC_URI += "file://fix_warning.patch"
 # |
 # | CMake Generate step failed.  Build files cannot be regenerated correctly.
 
-ROS_BUILDTOOL_DEPENDS += " \
+ROS_BUILDTOOL_DEPENDS += "\
     ament-cmake-ros-native \
     python3-numpy-native \
 "
@@ -49,3 +46,6 @@ ROS_BUILDTOOL_DEPENDS += " \
 
 # v4l2-camera/0.7.0-1-r0/recipe-sysroot/usr/include/libstatistics_collector/libstatistics_collector/topic_statistics_collector/received_message_period.hpp:174:32: error: unused parameter 'message_info' [-Werror=unused-parameter]
 CXXFLAGS += "-Wno-error=unused-parameter"
+
+# v4l2-camera-0.7.1-1/src/v4l2_camera.cpp:47:69: error: 'image_transport::CameraPublisher image_transport::create_camera_publisher(rclcpp::Node*, const std::string&, rmw_qos_profile_t, rclcpp::PublisherOptions)' is deprecated: Use create_camera_publisher(RequiredInterfaces node_interfaces, ..., rclcpp::QoS, ...) instead [-Werror=deprecated-declarations]
+CXXFLAGS += "-Wno-error=deprecated-declarations"

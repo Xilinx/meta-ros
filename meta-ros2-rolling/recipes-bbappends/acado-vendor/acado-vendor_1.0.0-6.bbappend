@@ -5,12 +5,12 @@
 # https://github.com/cho3/hpmpc.git   GIT_TAG abbcf0806e4c8763ab2129a90efd827d194c1b00
 # during do_compile
 FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}:"
-SRC_URI = " \
+SRC_URI = "\
     git://github.com/ros2-gbp/acado_vendor-release;name=release;${ROS_BRANCH};protocol=https \
     file://0001-CMakeLists.txt-fetch-acado-hpmpc-with-bitbake-fetche.patch \
-    git://github.com/cho3/acado.git;protocol=https;name=acado-upstream;destsuffix=git/acado-upstream;branch=submodule \
+    git://github.com/cho3/acado.git;protocol=https;name=acado-upstream;destsuffix=${BB_GIT_DEFAULT_DESTSUFFIX}/acado-upstream;branch=submodule \
     file://0001-acado-cmake-CompilerOptions.cmake-don-t-set-march-native.patch;patchdir=acado-upstream \
-    git://github.com/cho3/hpmpc.git;protocol=https;name=hpmpc-upstream;destsuffix=git/hpmpc-upstream;branch=submodule \
+    git://github.com/cho3/hpmpc.git;protocol=https;name=hpmpc-upstream;destsuffix=${BB_GIT_DEFAULT_DESTSUFFIX}/hpmpc-upstream;branch=submodule \
     file://0001-hpmpc-Don-t-clear-CMAKE_C_FLAGS.patch;patchdir=hpmpc-upstream \
 "
 SRCREV_release = "ad538a018f18ff378d99d46e8508793b5751ae35"

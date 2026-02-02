@@ -1,3 +1,4 @@
+# Copyright (c) 2019-2021 LG Electronics, Inc.
 # Copyright (c) Qualcomm Innovation Center, Inc. All rights reserved
 
 # The SOABI setting changed in newer python3 with:
@@ -12,7 +13,10 @@ PYTHON_SOABI_ARCH_SUFFIX:arm = ""
 # Another exception is i686 TUNE_ARCH in dunfell and newer with this change:
 # https://git.openembedded.org/openembedded-core/commit/?h=dunfell&id=6beab388e73b3ac6157650855a6c1fb1d71e8015
 PYTHON_SOABI_ARCH:i686 = "i386-${TARGET_OS}"
-PYTHON_SOABI = "cpython-${@d.getVar('PYTHON_BASEVERSION').replace('.', '')}${PYTHON_ABI}-${PYTHON_SOABI_ARCH}${PYTHON_SOABI_ARCH_SUFFIX}"
+# Add in hf suffix if on a hard float capable device
+HF = ""
+HF:class-target = "${@ bb.utils.contains('TUNE_CCARGS_MFLOAT', 'hard', 'hf', '', d)}"
+PYTHON_SOABI = "cpython-${@d.getVar('PYTHON_BASEVERSION').replace('.', '')}${PYTHON_ABI}-${PYTHON_SOABI_ARCH}${PYTHON_SOABI_ARCH_SUFFIX}${HF}"
 
 EXTRA_OECMAKE:append = " -DBUILD_TESTING=OFF"
 EXTRA_OECMAKE:append:class-target = " -DPYTHON_SOABI=${PYTHON_SOABI}"
@@ -21,20 +25,26 @@ EXTRA_OECMAKE:append:class-target = " -DPYTHON_SOABI=${PYTHON_SOABI}"
 #
 #    "Could not find ROS middleware implementation 'NOTFOUND'"
 #
-export AMENT_PREFIX_PATH="${STAGING_DIR_HOST}${prefix};${STAGING_DIR_NATIVE}${prefix};${STAGING_DIR_HOST}${ros_prefix};${STAGING_DIR_NATIVE}${ros_prefix}"
+export AMENT_PREFIX_PATH = "${STAGING_DIR_HOST}${prefix};${STAGING_DIR_NATIVE}${prefix};${STAGING_DIR_HOST}${ros_prefix};${STAGING_DIR_NATIVE}${ros_prefix}"
 
 inherit cmake python3native
 
 FILES:${PN}:prepend = " \
     ${datadir}/ament_index \
 "
+EXTRA_OECMAKE:append = " -DAMENT_CMAKE_ENVIRONMENT_PARENT_PREFIX_PATH_GENERATION=OFF"
 
-EXTRA_OECMAKE:prepend = "\
+EXTRA_OECMAKE:prepend:class-target = "\
     -DCMAKE_PREFIX_PATH='${STAGING_DIR_HOST}${ros_prefix};${STAGING_DIR_HOST}${prefix}' \
     -DCMAKE_INSTALL_PREFIX:PATH='${ros_prefix}' \
 "
 
 EXTRA_OECMAKE:prepend:class-native = "\
     -DCMAKE_PREFIX_PATH='${ros_prefix}' \
+    -DCMAKE_INSTALL_PREFIX:PATH='${ros_prefix}' \
+"
+
+EXTRA_OECMAKE:prepend:class-nativesdk = "\
+    -DCMAKE_PREFIX_PATH='${STAGING_DIR_NATIVE}${ros_base_prefix};${STAGING_DIR_NATIVE}${ros_prefix};${STAGING_DIR_NATIVE}${prefix}' \
     -DCMAKE_INSTALL_PREFIX:PATH='${ros_prefix}' \
 "

@@ -17,7 +17,7 @@
 # Copyright (c) 2019-2021 LG Electronics, Inc.
 
 readonly SCRIPT_NAME="ros-generate-recipes"
-readonly SCRIPT_VERSION="1.8.0"
+readonly SCRIPT_VERSION="1.9.0"
 
 # Files under ros/rosdistro/rosdep that we care about. Keep in sync with setting in ros-generate-cache.sh .
 readonly ROSDEP_YAML_BASENAMES="base python ruby"
@@ -54,7 +54,7 @@ case $ROS_DISTRO in
         ROS_VERSION="1"
         ;;
 
-    "dashing"|"eloquent"|"foxy"|"galactic"|"humble"|"iron"|"jazzy"|"rolling")
+    "dashing"|"eloquent"|"foxy"|"galactic"|"humble"|"iron"|"jazzy"|"kilted"|"rolling")
         ROS_VERSION="2"
         ;;
 
@@ -68,6 +68,41 @@ if [ $# -gt 1 ]; then
     shift
     only_option="--only $*"
 fi
+
+layerconf=meta-ros$ROS_VERSION-$ROS_DISTRO/conf/layer.conf
+if [ ! -f $layerconf ]; then
+    echo "ABORT: $layerconf doesn't exist"
+    exit 1
+fi
+
+YOCTO_RELEASE=$(grep "^LAYERSERIES_COMPAT_ros$ROS_VERSION-${ROS_DISTRO}-layer" $layerconf | sed 's/[^=]* *= *"\(.*\)"/\1/')
+if [ -z "${YOCTO_RELEASE}" ]; then
+    echo "ABORT: Could not detect Yocto Project release from $layerconf"
+    exit 1
+fi
+
+# Check if it is a known release
+case $YOCTO_RELEASE in
+    # End-of-life
+    "thud"|"warrior"|"zeus"|"dunfell"|"gatesgarth"|"hardknott"|"honister")
+        ;;
+
+    # Recent End-of-life
+    "langdale"|"mickledore"|"nanbield"|"styhead")
+        ;;
+
+    # Supported LTS releases
+    "kirkstone"|"scarthgap")
+        ;;
+
+    # Supported non-LTS releases
+    "walnascar"|"whinlatter"|"wrynose")
+        ;;
+
+    *)  echo "ABORT: Unrecognized YOCTO_RELEASE: $YOCTO_RELEASE"
+        exit 1
+        ;;
+esac
 
 generated=meta-ros$ROS_VERSION-$ROS_DISTRO/files/$ROS_DISTRO/generated
 if [ ! -f $generated/cache.yaml ]; then
@@ -95,11 +130,11 @@ fi
 
 # Keep this block in sync with the one in ros-generate-cache.sh .
 case $ROS_DISTRO_RELEASE_DATE in
-    pre-release|[2-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9])
+    final|pre-release|[2-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9])
         : OK
         ;;
 
-    *)  echo "ABORT: ROS_DISTRO_RELEASE_DATE not YYYY-MM-DD or 'pre-release': '$ROS_DISTRO_RELEASE_DATE'"
+    *)  echo "ABORT: ROS_DISTRO_RELEASE_DATE not YYYY-MM-DD or 'final' or 'pre-release': '$ROS_DISTRO_RELEASE_DATE'"
         exit 1
         ;;
 esac
@@ -153,8 +188,22 @@ export ROSDISTRO_INDEX_URL="file://$tmpdir/index-v4.yaml"
 export SUPERFLORE_GENERATION_DATETIME="$ROS_ROSDISTRO_COMMIT_DATETIME"
 
 before_commit=$(git rev-list -1 HEAD)
-$SUPERFLORE_GEN_OE_RECIPES --dry-run --no-branch --ros-distro $ROS_DISTRO --output-repository-path . --upstream-branch HEAD \
-                            $only_option
+
+CMD="$SUPERFLORE_GEN_OE_RECIPES\
+ --dry-run\
+ --no-branch\
+ --ros-distro $ROS_DISTRO\
+ --yocto-release $YOCTO_RELEASE\
+ --output-repository-path .\
+ --upstream-branch HEAD\
+ $only_option"
+
+echo "Running: $CMD"
+$CMD
+
+if [ $? -ne 0 ]; then
+    echo "ABORT: $SUPERFLORE_GEN_OE_RECIPES failed to run."
+fi
 
 after_commit=$(git rev-list -1 HEAD)
 if [ $after_commit != $before_commit -a -z "$only_option" ]; then
@@ -179,7 +228,7 @@ ROS_GENERATE_CACHE_PROGRAM_VERSION = "$ROS_GENERATE_CACHE_VERSION"
 ROS_GENERATE_RECIPES_PROGRAM_VERSION = "$SCRIPT_VERSION"
 !
     git add $generated_inc
-    git commit --amend -q -C HEAD
+    git commit -s --amend -q -C HEAD
 
     unset generated_inc
 fi

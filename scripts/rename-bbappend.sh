@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Usage: cd meta-ros
-#        scripts/rename-bbappend.sh ROS_DISTRO_LAYER SYNC_COMMIT_ID
+#        scripts/rename-bbappend.sh ROS_DISTRO SYNC_COMMIT_ID
 #
 # Uses the sync commit to automatically rename all the bbappend files in git
 #
@@ -13,7 +13,7 @@ readonly SCRIPT_VERSION="1.0.0"
 
 usage() {
     echo "Usage: cd meta-ros"
-    echo "       scripts/rename-bbappend.sh ROS_DISTRO_LAYER SYNC_COMMIT_ID"
+    echo "       scripts/rename-bbappend.sh ROS_DISTRO SYNC_COMMIT_ID"
     exit 1
 }
 
@@ -24,13 +24,27 @@ fi
 
 [ $# -ne 2 ] && usage
 
-ROS_DISTRO_LAYER="$1"
+ROS_DISTRO="$1"
 SYNC_COMMIT_ID="$2"
 
 GIT_SYNC_LIST=$(git log --format=%B -n 1 ${SYNC_COMMIT_ID})
 
+ROS_DISTRO_LAYER=$(ls -d meta-ros?-${ROS_DISTRO})
+
 if [ ! -d ${ROS_DISTRO_LAYER} ]; then
     echo "ERROR: Could not find directory ${ROS_DISTRO_LAYER}"
+    exit 1
+fi
+
+SYNC_COMMIT_MSG=$(git show --no-patch ${SYNC_COMMIT_ID} ${ROS_DISTRO_LAYER})
+if [ -z "${SYNC_COMMIT_MSG}" ]; then
+    echo "ERROR: Sync commit does not contain changes in ${ROS_DISTRO_LAYER}"
+    exit 1
+fi
+
+ROS_DISTRO_NAME=$(grep -h 'ROS[12]_DISTRO =' ${ROS_DISTRO_LAYER}/conf/ros-distro/include/*/ros-distro.inc | sed 's/.*= "\(.*\)"/\1/g')
+if [ -z "${ROS_DISTRO_NAME}" ]; then
+    echo "ERROR: Could not find ROS distro name in ${ROS_DISTRO_LAYER}"
     exit 1
 fi
 
@@ -67,3 +81,5 @@ while IFS= read -r line; do
         done <<< "${BBAPPEND_FILES}"
     fi
 done <<< "${GIT_SYNC_LIST}"
+
+git commit -s -m "{$ROS_DISTRO_NAME} Rename bbappends to match new versions"

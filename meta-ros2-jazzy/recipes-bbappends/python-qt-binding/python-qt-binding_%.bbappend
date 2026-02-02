@@ -1,7 +1,10 @@
-# Copyright (c) 2023 Wind River Systems, Inc.
-# Copyright (C) 2024 Advanced Micro Devices, Inc.  All rights reserved.
+# Copyright (c) 2023-2025 Wind River Systems, Inc.
 
 LICENSE = "BSD-3-Clause"
 
-# Disable buildpaths QA check warnings.
-INSANE_SKIP:${PN} += "buildpaths"
+SRC_URI += "file://adding-sip5-integration.patch"
+
+inherit python3targetconfig
+
+DEPENDS += "sip-native python3-pyqt5-native"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}:"

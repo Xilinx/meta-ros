@@ -25,9 +25,10 @@ require conf/ros-distro/include/jazzy/ros-distro-preferred-providers.inc
 ROS_SUPERFLORE_GENERATED_BUILDTOOLS += " \
     action-msgs-native \
     ament-acceleration-native \
-    ament-lint-native \
     ament-cmake-cpplint-native \
     ament-cmake-uncrustify-native \
+    ament-index-cpp-native \
+    ament-lint-native \
     composition-interfaces-native \
     cyclonedds-native \
     domain-coordinator-native \
@@ -40,14 +41,15 @@ ROS_SUPERFLORE_GENERATED_BUILDTOOLS += " \
     iceoryx-posh-native \
     launch-native \
     launch-ros-native \
-    launch-yaml-native \
-    launch-xml-native \
     launch-testing-ros-native \
+    launch-xml-native \
+    launch-yaml-native \
+    libstatistics-collector-native \
     libyaml-vendor-native \
     lifecycle-msgs-native \
     osrf-pycommon-native \
+    parameter-traits-native \
     pybind11-vendor-native \
-    rcutils-native \
     rcl-action-native \
     rcl-interfaces-native \
     rcl-lifecycle-native \
@@ -55,8 +57,11 @@ ROS_SUPERFLORE_GENERATED_BUILDTOOLS += " \
     rcl-logging-spdlog-native \
     rcl-native \
     rcl-yaml-param-parser-native \
+    rclcpp-lifecycle-native \
+    rclcpp-native \
     rclpy-native \
     rcpputils-native \
+    rcutils-native \
     rmf-building-map-msgs-native \
     rmf-site-map-msgs-native \
     rmw-cyclonedds-cpp-native \
@@ -81,12 +86,17 @@ ROS_SUPERFLORE_GENERATED_BUILDTOOLS += " \
     rosidl-typesupport-c-native \
     rosidl-typesupport-cpp-native \
     rosidl-typesupport-fastrtps-c-native \
-    rosidl-runtime-c-native \
-    rosidl-runtime-cpp-native \
+    rosidlcpp-generator-core-native \
+    rosidlcpp-parser-native \
     rpyutils-native \
+    rsl-native \
     spdlog-vendor-native \
+    statistics-msgs-native \
     std-msgs-native \
+    tcb-span-native \
+    tl-expected-native \
     tracetools-native \
+    type-description-interfaces-native \
     uncrustify-vendor-native \
     unique-identifier-msgs-native \
 "
@@ -190,6 +200,11 @@ ROS_WORLD_SKIP_GROUPS += "wireguard"
 
 # packages (like rtabmap) that use g2o
 ROS_WORLD_SKIP_GROUPS += "g2o"
+
+# packages that require pyside2
+ROS_WORLD_SKIP_GROUPS += "pyside2"
+
+ROS_WORLD_SKIP_GROUPS += "nanobind"
 
 # Must use a _pn- override in this file to override the ROS_BUILD_TYPE of a generated recipe,
 # because we need to set this variable before the "inherit" line in the recipe is parsed,
@@ -300,6 +315,8 @@ ROS_UNRESOLVED_DEP-libdbus-dev = "dbus"
 
 ROS_UNRESOLVED_DEP-python3-distro = "python3-distro"
 
+ROS_UNRESOLVED_DEP-python3-filelock = "python3-filelock"
+
 ROS_UNRESOLVED_DEP-python3-img2pdf = "python3-img2pdf"
 
 ROS_UNRESOLVED_DEP-python3-ntplib = " python3-ntplib"
@@ -386,3 +403,87 @@ ROS_UNRESOLVED_DEP-libgdal-dev = "gdal"
 ROS_UNRESOLVED_DEP-python3-smbus = "python3-smbus"
 ROS_UNRESOLVED_DEP-libxkbcommon-dev = "libxkbcommon"
 ROS_UNRESOLVED_DEP-libavdevice-dev = "ffmpeg"
+ROS_UNRESOLVED_DEP-glslc = "shaderc"
+ROS_UNRESOLVED_DEP-libshaderc-dev = "shaderc"
+ROS_UNRESOLVED_DEP-libgts = "gts"
+ROS_UNRESOLVED_DEP-liblz4 = "lz4"
+ROS_UNRESOLVED_DEP-liblz4-dev = "lz4"
+ROS_UNRESOLVED_DEP-qml-module-qtquick-extras = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml-module-qtcharts = "qtcharts"
+ROS_UNRESOLVED_DEP-qml-module-qtgraphicaleffects = "qtgraphicaleffects"
+ROS_UNRESOLVED_DEP-qml-module-qt-labs-folderlistmodel = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml-module-qt-labs-platform = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml-module-qt-labs-settings = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml-module-qtlocation = "qtlocation"
+ROS_UNRESOLVED_DEP-qml-module-qtpositioning = "qtlocation"
+ROS_UNRESOLVED_DEP-qml-module-qtquick2 = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml-module-qtquick-controls = "qtquickcontrols"
+ROS_UNRESOLVED_DEP-qml-module-qtquick-controls2 = "qtquickcontrols2"
+ROS_UNRESOLVED_DEP-qml-module-qtquick-dialogs = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml-module-qtquick-layouts = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml-module-qtquick-templates2 = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml-module-qtquick-window2 = "qtdeclarative"
+ROS_UNRESOLVED_DEP-ruby = "ruby"
+ROS_UNRESOLVED_DEP-zziplib = "zziplib"
+ROS_UNRESOLVED_DEP-libnlopt-dev = "nlopt"
+ROS_UNRESOLVED_DEP-libnlopt-cxx-dev = "nlopt"
+ROS_UNRESOLVED_DEP-rapidjson-dev = "rapidjson"
+ROS_UNRESOLVED_DEP-libwebsockets = "libwebsockets"
+ROS_UNRESOLVED_DEP-qtquickcontrols2-5-dev = "qtquickcontrols2"
+ROS_UNRESOLVED_DEP-qtquickcontrols2-5 = "qtquickcontrols2"
+ROS_UNRESOLVED_DEP-libfreeimage = "freeimage"
+ROS_UNRESOLVED_DEP-libfreeimage-dev = "freeimage"
+
+ROS_UNRESOLVED_DEP-libxcb-randr0-dev = "libxcb"
+ROS_UNRESOLVED_DEP-glslang-dev = "glslang"
+ROS_UNRESOLVED_DEP-libx11-xcb-dev = "libxcb"
+ROS_UNRESOLVED_DEP-libwebsockets-dev = "libwebsockets"
+ROS_UNRESOLVED_DEP-libcurl-dev = "curl"
+ROS_UNRESOLVED_DEP-libzip-dev = "libzip"
+ROS_UNRESOLVED_DEP-ignition-math6 = "ignition-math6"
+
+ROS_UNRESOLVED_DEP-ros-ign = "ros-gz"
+ROS_UNRESOLVED_DEP-ros-ign-gazebo = "ros-gz-sim"
+ROS_UNRESOLVED_DEP-ros-ign-gazebo-demos = "ros-gz-sim-demos"
+ROS_UNRESOLVED_DEP-ros-ign-image = "ros-gz-image"
+ROS_UNRESOLVED_DEP-ros-ign-interfaces = "ros-gz-interfaces"
+ROS_UNRESOLVED_DEP-ros-ign-bridge = "ros-gz-bridge"
+
+ROS_UNRESOLVED_DEP-python3-deprecated = "python3-deprecated"
+ROS_UNRESOLVED_DEP-coinor-libipopt-dev = "ipopt"
+
+ROS_UNRESOLVED_DEP-python3-semver = "python3-semver"
+ROS_UNRESOLVED_DEP-libusb = "libusb-compat"
+ROS_UNRESOLVED_DEP-liboctomap-dev = "octomap"
+ROS_UNRESOLVED_DEP-python3-rich = "python3-rich"
+ROS_UNRESOLVED_DEP-libserial-dev = "libserial"
+ROS_UNRESOLVED_DEP-libqt5-multimedia = "qtmultimedia"
+ROS_UNRESOLVED_DEP-libboost-timer-dev = "boost"
+ROS_UNRESOLVED_DEP-gazebo-msgs = "gazebo-msgs"
+ROS_UNRESOLVED_DEP-python3-icecream = "python3-icecream"
+ROS_UNRESOLVED_DEP-python3-waitress = "python3-waitress"
+ROS_UNRESOLVED_DEP-python3-paho-mqtt = "python3-paho-mqtt"
+ROS_UNRESOLVED_DEP-network-manager = "networkmanager"
+ROS_UNRESOLVED_DEP-python3-antlr4 = "python3-antlr4-runtime"
+ROS_UNRESOLVED_DEP-python3-expiringdict = "python3-expiringdict"
+ROS_UNRESOLVED_DEP-python3-fastapi = "python3-fastapi"
+ROS_UNRESOLVED_DEP-python3-gi-cairo = "python3-pygobject"
+ROS_UNRESOLVED_DEP-python3-msgpack-numpy = "python3-msgpack-numpy"
+ROS_UNRESOLVED_DEP-python3-networkx = "python3-networkx"
+ROS_UNRESOLVED_DEP-python3-tqdm = "python3-tqdm"
+ROS_UNRESOLVED_DEP-python3-transforms3d = "python3-transforms3d"
+ROS_UNRESOLVED_DEP-python3-uvicorn = "python3-uvicorn"
+ROS_UNRESOLVED_DEP-python-is-python3 = "python3"
+ROS_UNRESOLVED_DEP-stress = "stress"
+ROS_UNRESOLVED_DEP-xclip = "xclip"
+
+ROS_UNRESOLVED_DEP-libicu-dev = "icu"
+ROS_UNRESOLVED_DEP-libblosc-dev = "blosc"
+
+ROS_UNRESOLVED_DEP-libopenvdb-dev = "openvdb"
+
+ROS_UNRESOLVED_DEP-nanobind = "python3-nanobind"
+ROS_UNRESOLVED_DEP-nanobind-dev = "python3-nanobind"
+ROS_UNRESOLVED_DEP-libgirepository = "gobject-introspection"
+ROS_UNRESOLVED_DEP-libgirepository-dev = "gobject-introspection"
+ROS_UNRESOLVED_DEP-python3-tabulate = "python3-tabulate"

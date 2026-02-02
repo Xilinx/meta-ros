@@ -291,6 +291,15 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION = " \
     vision-msgs-rviz-plugins \
 "
 
+# Depends on kortex-api which is only available for x86_64
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'kortexapi', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_KORTEXAPI}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_KORTEXAPI = " \
+    kortex-api \
+    kortex-bringup\
+    kortex-description \
+    kortex-driver \
+"
+
 # Depends on mesa or libglu which requires opengl or vulkan DISTRO_FEATURE
 RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'opengl', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_OPENGL}', '', d)}"
 ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_OPENGL = " \
@@ -509,6 +518,27 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_META_QT5 = " \
     webots-ros2-universal-robot \
 "
 
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'qt6', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_META_QT6}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_META_QT6 = " \
+    desktop-full \
+    dolly-ignition \
+    gz-launch-vendor \
+    gz-gui-vendor \
+    gz-ros2-control \
+    gz-sim-vendor \
+    leo-gz-bringup \
+    leo-gz-plugins \
+    leo-simulator \
+    nav2-minimal-tb3-sim \
+    nav2-minimal-tb4-sim \
+    open-manipulator \
+    open-manipulator-bringup \
+    ros-gz \
+    ros-gz-sim \
+    ros-gz-sim-demos \
+    simulation \
+"
+
 # OE won't let us build ffmpeg unless LICENSE_FLAGS_ACCEPTED contains "commercial" or "commercial_ffmpeg" or "ffmpeg".
 RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'ffmpeg', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_FFMPEG}', '', d)}"
 ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_FFMPEG = " \
@@ -589,6 +619,12 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_GAZEBO = " \
     velodyne-simulator \
     velodyne-gazebo-plugins \
 "
+
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'pyside2', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_PYSIDE2}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_PYSIDE2 = " \
+    rqt-dotgraph \
+"
+
 
 ROS_SUPERFLORE_GENERATED_ARCH_SPECIFIC_RC_GENICAM_API:x86 = ""
 ROS_SUPERFLORE_GENERATED_ARCH_SPECIFIC_RC_GENICAM_API:x86-64 = ""
@@ -773,6 +809,7 @@ RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'webots-p
 ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_WEBOTS_PYTHON_MODULES = " \
     webots-ros2 \
     webots-ros2-abb \
+    webots-ros2-crazyflie \
     webots-ros2-control \
     webots-ros2-core \
     webots-ros2-demos \
@@ -780,6 +817,7 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_WEBOTS_PYTHON_MODULES = " \
     webots-ros2-driver \
     webots-ros2-epuck \
     webots-ros2-examples \
+    webots-ros2-husarion\
     webots-ros2-importer \
     webots-ros2-mavic \
     webots-ros2-tesla \
@@ -827,8 +865,16 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_LIBOPEN3D = " \
 
 RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'scipy', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_SCIPY}', '', d)}"
 ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_SCIPY = " \
+    coal \
+    eigenpy \
+    hpp-fcl \
+    kinematics-interface-pinocchio \
+    pinocchio \
     proxsuite \
+    python3-platformdirs \
+    python3-scipy \
     slider-publisher \
+    tsid \
 "
 
 RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'hunter', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_HUNTER}', '', d)}"
@@ -897,6 +943,157 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_G2O = " \
     rtabmap-viz \
 "
 
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'nanobind', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_NANOBIND}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_NANOBIND = " \
+    nanoeigenpy \
+"
+
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'zenoh', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_ZENOH}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_ZENOH = " \
+    rmw-test-fixture-implementation \
+    rmw-zenoh-cpp \
+    zenoh \
+    zenoh-c \
+    zenoh-cpp \
+    zenoh-cpp-vendor \
+    zenoh-pico \
+    zenoh-security-tools \
+"
+
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'gripper', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_GRIPPER}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_GRIPPER = " \
+    gripper-controllers \
+    moveit-servo \
+    ur \
+    ur-moveit-config \
+    ur-simulation-gz \
+"
+
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'openblas', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_OPENBLAS}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_OPENBLAS = " \
+    cartographer \
+    cartographer-ros \
+    cartographer-rviz \
+    ecl-core \
+    ecl-core-apps \
+    ecl-geometry \
+    ecl-linear-algebra \
+    ecl-manipulators \
+    ecl-mobile-robot \
+    ecl-statistics \
+    fuse-constraints \
+    fuse-core \
+    fuse-graphs \
+    fuse-loss \
+    fuse-models \
+    fuse-optimizers \
+    fuse-publishers \
+    fuse-tutorials \
+    fuse-variables \
+    fuse-viz \
+    kitti-metrics-eval \
+    kobuki-core \
+    libg2o \
+    mola \
+    mola-bridge-ros2 \
+    mola-gnss-to-markers \
+    mola-imu-preintegration \
+    mola-input-euroc-dataset \
+    mola-input-kitti360-dataset \
+    mola-input-kitti-dataset \
+    mola-input-mulran-dataset \
+    mola-input-paris-luco-dataset \
+    mola-input-rawlog \
+    mola-input-rosbag2 \
+    mola-input-video \
+    mola-kernel \
+    mola-launcher \
+    mola-lidar-odometry \
+    mola-metric-maps \
+    mola-pose-list \
+    mola-relocalization \
+    mola-state-estimation \
+    mola-state-estimation-simple \
+    mola-state-estimation-smoother \
+    mola-traj-tools \
+    mola-viz \
+    mola-yaml \
+    mp2p-icp \
+    mrpt-apps \
+    mrpt-generic-sensor \
+    mrpt-libapps \
+    mrpt-libbase \
+    mrpt-libgui \
+    mrpt-libhwdrivers \
+    mrpt-libmaps \
+    mrpt-libmath \
+    mrpt-libnav \
+    mrpt-libobs \
+    mrpt-libopengl \
+    mrpt-libposes \
+    mrpt-libros-bridge \
+    mrpt-libslam \
+    mrpt-libtclap \
+    mrpt-map-server \
+    mrpt-msgs-bridge \
+    mrpt-navigation \
+    mrpt-path-planning \
+    mrpt-pf-localization \
+    mrpt-pointcloud-pipeline \
+    mrpt-rawlog \
+    mrpt-reactivenav2d \
+    mrpt-sensor-bumblebee-stereo \
+    mrpt-sensor-gnss-nmea \
+    mrpt-sensor-gnss-novatel \
+    mrpt-sensor-imu-taobotics \
+    mrpt-sensorlib \
+    mrpt-sensors \
+    mrpt-tps-astar-planner \
+    mrpt-tutorials \
+    mvsim \
+    nav2-bringup \
+    nav2-constrained-smoother \
+    navigation2 \
+    pose-cov-ops \
+    python-mrpt \
+    rmf-traffic-editor \
+    robot-calibration \
+    slam-toolbox \
+    turtlebot3 \
+    turtlebot3-cartographer \
+    turtlebot3-navigation2 \
+    tvm-vendor \
+"
+
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'unresolved', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_UNRESOLVED}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_UNRESOLVED = " \
+    python3-filelock \
+    canopen-ros2-controllers \
+    controller-manager \
+    gz-ros2-control \
+    kinova-gen3-6dof-robotiq-2f-85-moveit-config \
+    kinova-gen3-7dof-robotiq-2f-85-moveit-config \
+    moveit-hybrid-planning \
+    moveit-resources-fanuc-moveit-config \
+    moveit-resources-panda-moveit-config \
+    nmea-hardware-interface \
+    open-manipulator \
+    open-manipulator-bringup \
+    open-manipulator-moveit-config \
+    ros2-control \
+    ros2controlcli \
+    rqt-controller-manager \
+    synapticon-ros2-control \
+    ur-calibration \
+    ur-robot-driver \
+\
+    python3-rich \
+    jacro \
+\
+    python3-httpx \
+    automatika-embodied-agents \
+"
+
 RDEPENDS:${PN}:remove = "vitis-common"
 
 # sophus does not directly provide any runtime components
@@ -943,3 +1140,29 @@ RDEPENDS:${PN}:remove = "canopen-tests"
 # nao-lola
 # "Please use nao_lola_client. nao_lola will be removed in K-turtle."
 RDEPENDS:${PN}:remove = "nao-lola"
+
+# Depends on python3-expiringdict
+RDEPENDS:${PN}:remove = "yasmin-demos"
+RDEPENDS:${PN}:remove = "yasmin-viewer"
+
+# Depends on python3-uvicorn
+RDEPENDS:${PN}:remove = "rmf-demos-fleet-adapter"
+
+# Depends on xclip
+RDEPENDS:${PN}:remove = "log-view"
+
+# Depends on python3-pyside2
+RDEPENDS:${PN}:remove = "rqt-dotgraph"
+
+# Depends on actionlib-msgs, which was removed from the ROS index
+RDEPENDS:${PN}:remove = "cob-actions"
+RDEPENDS:${PN}:remove = "actionlib-msgs"
+
+# Depends on mola-imu-preintegration, which was removed from the ROS index
+RDEPENDS:${PN}:remove = "mola-state-estimation"
+RDEPENDS:${PN}:remove = "mola-state-estimation-simple"
+RDEPENDS:${PN}:remove = "mola-state-estimation-smoother"
+RDEPENDS:${PN}:remove = "mola-lidar-odometry"
+
+# Depends on muparser, which is only available in meta-qt5-extra
+RDEPENDS:${PN}:remove = "parameter-expression"

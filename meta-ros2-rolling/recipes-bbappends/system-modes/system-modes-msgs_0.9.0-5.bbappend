@@ -1,9 +1,7 @@
 # Copyright (c) 2021 LG Electronics, Inc.
 
-ROS_BUILD_DEPENDS += " \
+ROS_BUILD_DEPENDS += "\
     fastcdr \
-    fastrtps \
-    fastrtps-cmake-module \
     rosidl-default-runtime \
     rosidl-default-generators \
     rosidl-typesupport-fastrtps-c \
@@ -11,9 +9,9 @@ ROS_BUILD_DEPENDS += " \
     rosidl-typesupport-introspection-cpp \
     rosidl-typesupport-fastrtps-c-native \
     rosidl-typesupport-fastrtps-cpp-native \
+    service-msgs \
 "
 
-ROS_EXEC_DEPENDS += " \
+ROS_EXEC_DEPENDS += "\
     builtin-interfaces \
-    service-msgs \
 "

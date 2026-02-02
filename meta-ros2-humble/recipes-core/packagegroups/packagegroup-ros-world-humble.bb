@@ -142,13 +142,14 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_LIBQGLVIEWER = " \
 
 RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'ignition', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION}', '', d)}"
 ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION = " \
+    aerostack2 \
+    andino-apps \
     andino-bringup \
     andino-control \
     andino-description \
-    andino-navigation \
     andino-gz-classic \
+    andino-navigation \
     andino-slam \
-    aerostack2 \
     as2-gazebo-classic-assets \
     as2-ign-gazebo-assets \
     as2-platform-ign-gazebo \
@@ -157,10 +158,10 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION = " \
     clearpath-nav2-demos \
     clearpath-simulator \
     clearpath-viz \
-    crane-plus-moveit-config \
     color-names \
-    dolly-ignition \
+    crane-plus-moveit-config \
     dolly \
+    dolly-ignition \
     etsi-its-rviz-plugins \
     gazebo-ros2-control \
     grid-map \
@@ -170,9 +171,8 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION = " \
     ign-rviz \
     ign-rviz-common \
     ign-rviz-plugins \
-    ignition-cmake2-vendor \
-    ignition-math6-vendor \
     ignition-cmake2 \
+    ignition-cmake2-vendor \
     ignition-common4 \
     ignition-fortress \
     ignition-fuel-tools7 \
@@ -180,6 +180,7 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION = " \
     ignition-gui6 \
     ignition-launch5 \
     ignition-math6 \
+    ignition-math6-vendor \
     ignition-msgs8 \
     ignition-physics5 \
     ignition-plugin \
@@ -190,8 +191,8 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION = " \
     ignition-utils1 \
     irobot-create-common-bringup \
     irobot-create-ignition-bringup \
-    irobot-create-ignition-sim \
     irobot-create-ignition-plugins \
+    irobot-create-ignition-sim \
     irobot-create-ignition-toolbox \
     irobot-create-nodes \
     irobot-create-toolbox \
@@ -243,11 +244,11 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION = " \
     rmf-visualization \
     rmf-visualization-rviz2-plugins \
     robotiq-description \
+    ros-gz \
     ros-gz-bridge \
     ros-gz-image \
     ros-gz-sim \
     ros-gz-sim-demos \
-    ros-gz \
     ros-ign \
     ros-ign-bridge \
     ros-ign-gazebo \
@@ -258,10 +259,10 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION = " \
     rtabmap-launch \
     rtabmap-ros \
     rtabmap-rviz-plugins \
-    rviz2 \
     rviz-default-plugins \
     rviz-satellite \
     rviz-visual-tools \
+    rviz2 \
     sdformat \
     sdformat-urdf \
     simulation \
@@ -279,10 +280,10 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_IGNITION = " \
     turtlebot3-manipulation-description \
     turtlebot3-manipulation-navigation2 \
     turtlebot3-navigation2 \
-    turtlebot4-navigation \
     turtlebot4-desktop \
     turtlebot4-ignition-bringup \
     turtlebot4-ignition-gui-plugins \
+    turtlebot4-navigation \
     turtlebot4-python-tutorials \
     turtlebot4-simulator \
     turtlebot4-tutorials \
@@ -556,6 +557,7 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_QT5_WIDGETS = " \
 # NB. gazebo-msgs is a dependency of non-Gazebo packages, so it doesn't appear here.
 RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'gazebo', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_GAZEBO}', '', d)}"
 ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_GAZEBO = " \
+    andino-apps \
     andino-bringup \
     andino-control \
     andino-description \
@@ -573,18 +575,35 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_GAZEBO = " \
     gazebo-plugins \
     gazebo11 \
     gazebo-model-attachment-plugin \
+    gazebo-no-physics-plugin \
+    gazebo-planar-move-plugin \
+    gazebo-plugins \
     gazebo-ros-pkgs \
     gazebo-ros \
     gazebo-rosdev \
-    gazebo-ros2-control-demos \
     gazebo-ros2-control \
+    gazebo-ros2-control-demos \
+    gazebo-set-joint-positions-plugin \
     gazebo-video-monitors \
     gazebo-video-monitor-plugins \
+    hri-face-body-matcher \
     irobot-create-gazebo-bringup \
     irobot-create-gazebo-plugins \
     irobot-create-gazebo-sim \
     kortex-bringup \
+    leo-gz-plugins \
+    leo-gz-bringup \
+    leo-simulator \
+    libdlib \
     nav2-system-tests \
+    omni-base-bringup \
+    omni-base-description \
+    omni-base-gazebo \
+    omni-base-robot \
+    omni-base-simulation \
+    open-manipulator \
+    open-manipulator-x-bringup \
+    open-manipulator-x-teleop \
     pal-gazebo-plugins \
     pmb2-gazebo \
     pmb2-simulation \
@@ -599,17 +618,32 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_GAZEBO = " \
     rmf-robot-sim-gz-plugins \
     rmf-robot-sim-gz-classic-plugins \
     rmf-rosdev \
+    rmf-traffic-editor-test-maps \
+    talos-gazebo \
+    tiago-bringup \
+    tiago-description \
     tiago-gazebo \
+    tiago-moveit-config \
+    tiago-robot \
     tiago-simulation \
     turtlebot3-gazebo \
     turtlebot3-manipulation \
     turtlebot3-manipulation-bringup \
+    turtlebot3-manipulation-gazebo \
     turtlebot3-manipulation-teleop \
     turtlebot3-simulations \
+    turtlebot4-simulator \
+    turtlebot4-ignition-bringup \
+    turtlebot4-ignition-gui-plugins \
     urdf-sim-tutorial \
     velodyne-description \
     velodyne-simulator \
     velodyne-gazebo-plugins \
+"
+
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'pyside2', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_PYSIDE2}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_PYSIDE2 = " \
+    rqt-dotgraph \
 "
 
 ROS_SUPERFLORE_GENERATED_ARCH_SPECIFIC_RC_GENICAM_API:x86 = ""
@@ -798,11 +832,13 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_WEBOTS_PYTHON_MODULES = " \
     webots-ros2-abb \
     webots-ros2-control \
     webots-ros2-core \
+    webots-ros2-crazyflie \
     webots-ros2-demos \
     webots-ros2-desktop \
     webots-ros2-driver \
     webots-ros2-epuck \
     webots-ros2-examples \
+    webots-ros2-husarion \
     webots-ros2-importer \
     webots-ros2-mavic \
     webots-ros2-tesla \
@@ -925,6 +961,28 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_G2O = " \
     rtabmap-viz \
 "
 
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'nanobind', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_NANOBIND}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_NANOBIND = " \
+    nanoeigenpy \
+"
+
+RDEPENDS:${PN}:remove = "${@bb.utils.contains('ROS_WORLD_SKIP_GROUPS', 'unresolved', '${ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_UNRESOLVED}', '', d)}"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES_DEPENDING_ON_UNRESOLVED = " \
+    kuka-external-control-sdk-examples \
+    kuka-iiqka-eac-driver \
+    kuka-drivers \
+    kuka-external-control-sdk \
+    hri-face-body-matcher \
+    iiqka-moveit-example \
+    lidar-situational-graphs \
+    libdlib \
+    proto2ros \
+    situational-graphs-reasoning \
+    ROS_UNRESOLVED_DEP-python3-torch-geometric-pip \
+    ROS_UNRESOLVED_DEP-protobuf-compiler-grpc \
+    ROS_UNRESOLVED_DEP-python3-multipledispatch \
+"
+
 RDEPENDS:${PN}:remove = "vitis-common"
 
 # sophus does not directly provide any runtime components
@@ -965,3 +1023,7 @@ RDEPENDS:${PN}:remove = "nao-meshes"
 # pepper-meshes requires Java and confirmation to a non-commercial license
 # developers using the Pepper robot may build it separately
 RDEPENDS:${PN}:remove = "pepper-meshes"
+
+# namosim requires python3-jsonpickle, python3-cairosvg, python3-skimage
+# python3-typer, and jupyter-notebook
+RDEPENDS:${PN}:remove = "namosim"
