@@ -28,9 +28,7 @@ ROS_EXPORT_DEPENDS = ""
 
 ROS_BUILDTOOL_EXPORT_DEPENDS = ""
 
-ROS_EXEC_DEPENDS = "\
-    catkin\
-"
+ROS_EXEC_DEPENDS = ""
 
 # Currently informational only -- see http://www.ros.org/reps/rep-0149.html#dependency-tags.
 ROS_TEST_DEPENDS = ""
@@ -47,7 +45,7 @@ RDEPENDS:${PN} += "${ROS_EXEC_DEPENDS}"
 ROS_BRANCH ?= "branch=release/jazzy/octomap"
 SRC_URI = "git://github.com/ros2-gbp/octomap-release.git;${ROS_BRANCH};protocol=https"
 SRCREV = "895657943d1ba59b781d1c1da097dab12568b016"
-S = "${WORKDIR}/git/octomap"
+S = "${WORKDIR}/git"
 
 ROS_BUILD_TYPE = "cmake"
 
