@@ -1,0 +1,86 @@
+Use CMake Targets
+
+Upstream-Status: Pending
+
+Signed-off-by: Rob Woolley <rob.woolley@windriver.com>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 33eb0df3..230f1979 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -51,12 +51,12 @@ target_include_directories(node_canopen_
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
+ )
+-ament_target_dependencies(node_canopen_driver
+-  rclcpp
+-  rclcpp_lifecycle
+-  lely_core_libraries
+-  yaml_cpp_vendor
+-  canopen_interfaces
++target_link_libraries(node_canopen_driver
++  rclcpp::rclcpp
++  rclcpp_lifecycle::rclcpp_lifecycle
++  lely_core_libraries::lely_core_libraries
++  ${yaml_cpp_vendor_TARGETS}
++  ${canopen_interfaces_TARGETS}
+ )
+ target_link_libraries(node_canopen_driver Boost::system Boost::thread)
+ 
+@@ -72,12 +72,12 @@ target_include_directories(node_canopen_
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
+ )
+-ament_target_dependencies(node_canopen_master
+-  rclcpp
+-  rclcpp_lifecycle
+-  lely_core_libraries
+-  yaml_cpp_vendor
+-  canopen_interfaces
++target_link_libraries(node_canopen_master
++  rclcpp::rclcpp
++  rclcpp_lifecycle::rclcpp_lifecycle
++  lely_core_libraries::lely_core_libraries
++  ${yaml_cpp_vendor_TARGETS}
++  ${canopen_interfaces_TARGETS}
+ )
+ target_link_libraries(node_canopen_master Boost::system Boost::thread)
+ 
+@@ -95,13 +95,13 @@ target_include_directories(device_contai
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
+ )
+-ament_target_dependencies(device_container
+-  rclcpp
+-  rclcpp_lifecycle
+-  lely_core_libraries
+-  yaml_cpp_vendor
+-  canopen_interfaces
+-  rclcpp_components
++target_link_libraries(device_container
++  rclcpp::rclcpp
++  rclcpp_lifecycle::rclcpp_lifecycle
++  lely_core_libraries::lely_core_libraries
++  ${yaml_cpp_vendor_TARGETS}
++  ${canopen_interfaces_TARGETS}
++  ${rclcpp_components_TARGETS}
+ )
+ target_link_libraries(device_container
+   node_canopen_master
+@@ -117,8 +117,14 @@ target_link_libraries(device_container_n
+   node_canopen_master
+   node_canopen_driver
+ )
+-ament_target_dependencies(device_container_node
+-  ${dependencies}
++target_link_libraries(device_container_node
++  ${canopen_interfaces_TARGETS}
++  lely_core_libraries::lely_core_libraries
++  ${lifecycle_msgs_TARGETS}
++  rclcpp::rclcpp
++  ${rclcpp_components_TARGETS}
++  rclcpp_lifecycle::rclcpp_lifecycle
++  ${yaml_cpp_vendor_TARGETS}
+ )
+ target_link_libraries(device_container_node Boost::system Boost::thread)
+ 
