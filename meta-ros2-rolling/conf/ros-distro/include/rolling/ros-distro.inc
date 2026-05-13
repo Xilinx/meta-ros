@@ -51,7 +51,6 @@ ROS_SUPERFLORE_GENERATED_BUILDTOOLS += " \
     libstatistics-collector-native \
     libyaml-vendor-native \
     lifecycle-msgs-native \
-    osrf-pycommon-native \
     parameter-traits-native \
     pybind11-vendor-native \
     rcl-action-native \
@@ -259,7 +258,7 @@ ROS_UNRESOLVED_DEP-libyaml = "libyaml"
 ROS_UNRESOLVED_DEP-libyaml-dev = "libyaml"
 
 # Used by generated-recipes/ament-cmake/ament-cmake-vendor-package_2.3.0-1.bb
-ROS_UNRESOLVED_DEP-python3-vcstool-native = "python3-vcstools-native"
+ROS_UNRESOLVED_DEP-python3-vcstool-native = "python3-vcs2l-native"
 
 # Used by generated-recipes/ament-lint/ament-flake8_0.16.0-1.bb
 ROS_UNRESOLVED_DEP-python3-flake8-comprehensions = "python3-flake8-comprehensions"
@@ -299,9 +298,7 @@ ROS_UNRESOLVED_DEP-libopencv-imgproc-dev = "opencv"
 
 ROS_UNRESOLVED_DEP-libomp-dev = "openmp"
 
-ROS_UNRESOLVED_DEP-libqt5-svg = "qtsvg"
-
-ROS_UNRESOLVED_DEP-python3-vcstool-native = "python3-vcstool-native"
+# ROS_UNRESOLVED_DEP-libqt5-svg = "qtsvg"
 
 ROS_UNRESOLVED_DEP-libbluetooth = "bluez5"
 ROS_UNRESOLVED_DEP-libbluetooth-dev = "bluez5"
@@ -344,9 +341,9 @@ ROS_UNRESOLVED_DEP-libgazebo11-dev = "gazebo11"
 ROS_UNRESOLVED_DEP-ignition-fortress = "ignition-fortress"
 ROS_UNRESOLVED_DEP-ignition-gui6-native = "ignition-gui6-native"
 
-ROS_UNRESOLVED_DEP-libqt5-qml = "qtbase"
-ROS_UNRESOLVED_DEP-libqt5-quick = "qtbase"
-ROS_UNRESOLVED_DEP-qml-module-qtquick-extras = "qtquickcontrols2"
+# ROS_UNRESOLVED_DEP-libqt5-qml = "qtbase"
+# ROS_UNRESOLVED_DEP-libqt5-quick = "qtbase"
+ROS_UNRESOLVED_DEP-qml-module-qtquick-extras = "qtdeclarative"
 
 ROS_UNRESOLVED_DEP-range-v3 = "range-v3"
 ROS_UNRESOLVED_DEP-simde = "simde"
@@ -393,8 +390,8 @@ ROS_UNRESOLVED_DEP-qml-module-qt-labs-settings = "qtdeclarative"
 ROS_UNRESOLVED_DEP-qml-module-qtlocation = "qtlocation"
 ROS_UNRESOLVED_DEP-qml-module-qtpositioning = "qtlocation"
 ROS_UNRESOLVED_DEP-qml-module-qtquick2 = "qtdeclarative"
-ROS_UNRESOLVED_DEP-qml-module-qtquick-controls = "qtquickcontrols"
-ROS_UNRESOLVED_DEP-qml-module-qtquick-controls2 = "qtquickcontrols2"
+ROS_UNRESOLVED_DEP-qml-module-qtquick-controls = "qtdeclarative"
+# ROS_UNRESOLVED_DEP-qml-module-qtquick-controls2 = "qtquickcontrols2"
 ROS_UNRESOLVED_DEP-qml-module-qtquick-dialogs = "qtdeclarative"
 ROS_UNRESOLVED_DEP-qml-module-qtquick-layouts = "qtdeclarative"
 ROS_UNRESOLVED_DEP-qml-module-qtquick-templates2 = "qtdeclarative"
@@ -405,8 +402,8 @@ ROS_UNRESOLVED_DEP-libnlopt-dev = "nlopt"
 ROS_UNRESOLVED_DEP-libnlopt-cxx-dev = "nlopt"
 ROS_UNRESOLVED_DEP-rapidjson-dev = "rapidjson"
 ROS_UNRESOLVED_DEP-libwebsockets = "libwebsockets"
-ROS_UNRESOLVED_DEP-qtquickcontrols2-5-dev = "qtquickcontrols2"
-ROS_UNRESOLVED_DEP-qtquickcontrols2-5 = "qtquickcontrols2"
+# ROS_UNRESOLVED_DEP-qtquickcontrols2-5-dev = "qtquickcontrols2"
+# ROS_UNRESOLVED_DEP-qtquickcontrols2-5 = "qtquickcontrols2"
 ROS_UNRESOLVED_DEP-libfreeimage = "freeimage"
 ROS_UNRESOLVED_DEP-libfreeimage-dev = "freeimage"
 
@@ -433,7 +430,7 @@ ROS_UNRESOLVED_DEP-python3-flake8-blind-except = "python3-flake8-blind-except"
 ROS_UNRESOLVED_DEP-python3-flake8-class-newline = "python3-flake8-class-newline"
 ROS_UNRESOLVED_DEP-liboctomap-dev = "octomap"
 ROS_UNRESOLVED_DEP-libserial-dev = "libserial"
-ROS_UNRESOLVED_DEP-libqt5-multimedia = "qtmultimedia"
+# ROS_UNRESOLVED_DEP-libqt5-multimedia = "qtmultimedia"
 ROS_UNRESOLVED_DEP-libboost-timer-dev = "boost"
 ROS_UNRESOLVED_DEP-gazebo-msgs = "gazebo-msgs"
 ROS_UNRESOLVED_DEP-python3-waitress = "python3-waitress"
@@ -474,3 +471,45 @@ ROS_UNRESOLVED_DEP-libc++-dev = "libcxx"
 ROS_UNRESOLVED_DEP-libcurl-vendor = "curl"
 
 ROS_UNRESOLVED_DEP-python3-osrf-pycommon = "python3-osrf-pycommon"
+
+ROS_UNRESOLVED_DEP-libqt6gui6t64 = "qtbase"
+ROS_UNRESOLVED_DEP-libqt6opengl6t64 = "qtbase"
+ROS_UNRESOLVED_DEP-libqt6widgets6t64 = "qtbase"
+
+ROS_UNRESOLVED_DEP-qml6-module-qt5compat-graphicaleffects = "qt5compat"
+ROS_UNRESOLVED_DEP-qml6-module-qtquick = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtquick-controls = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtquick-dialogs = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtquick-layouts = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qt-labs-folderlistmodel = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qt-labs-settings = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtcharts = "qtdeclarative"
+
+ROS_UNRESOLVED_DEP-qml6-module-qtcharts = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtquick-window = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtpositioning = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtqml = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtcore = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtquick-templates = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qt-labs-platform = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtqml-models = "qtdeclarative"
+ROS_UNRESOLVED_DEP-qml6-module-qtqml-workerscript = "qtdeclarative"
+
+ROS_UNRESOLVED_DEP-libopencv-core = "opencv"
+ROS_UNRESOLVED_DEP-libopencv-highgui = "opencv"
+ROS_UNRESOLVED_DEP-libopencv-imgcodecs = "opencv"
+ROS_UNRESOLVED_DEP-libopencv-imgproc = "opencv"
+ROS_UNRESOLVED_DEP-libopencv-videoio = "opencv"
+
+ROS_UNRESOLVED_DEP-python3-qt-bindings = "python3-pyqt6"
+ROS_UNRESOLVED_DEP-libgtest-dev-native = "gtest-native"
+ROS_UNRESOLVED_DEP-fzf = "fzf"
+
+ROS_UNRESOLVED_DEP-libexpected-dev = "tl-expected"
+
+ROS_UNRESOLVED_DEP-python3-graphviz = "python3-graphviz"
+ROS_UNRESOLVED_DEP-python3-smbus2 = "python3-smbus2"
+ROS_UNRESOLVED_DEP-python3-ujson = "python3-ujson"
+ROS_UNRESOLVED_DEP-python3-validators = "python3-validators"
+ROS_UNRESOLVED_DEP-rsyslog = "rsyslog"
+ROS_UNRESOLVED_DEP-zstd-vendor = "zstd"
